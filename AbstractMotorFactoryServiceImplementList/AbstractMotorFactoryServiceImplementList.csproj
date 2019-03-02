@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{53ED09BE-8053-4B6F-8364-A78981905997}</ProjectGuid>
+    <ProjectGuid>{DEA4B232-29E8-4DF5-860D-BF8055EE7BD5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AbstractMotorFactoryModel</RootNamespace>
-    <AssemblyName>AbstractMotorFactoryModel</AssemblyName>
+    <RootNamespace>AbstractMotorFactoryServiceImplementList</RootNamespace>
+    <AssemblyName>AbstractMotorFactoryServiceImplementList</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,13 +41,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Customer.cs" />
-    <Compile Include="Detail.cs" />
-    <Compile Include="Engine.cs" />
-    <Compile Include="EngineDetail.cs" />
-    <Compile Include="Production.cs" />
-    <Compile Include="ProductionStatus.cs" />
+    <Compile Include="DataListSingleton.cs" />
+    <Compile Include="Implementations\CoreServiceList.cs" />
+    <Compile Include="Implementations\CustomerServiceList.cs" />
+    <Compile Include="Implementations\DetailServiceList.cs" />
+    <Compile Include="Implementations\EngineServiceList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AbstractMotorFactoryModel\AbstractMotorFactoryModel.csproj">
+      <Project>{53ed09be-8053-4b6f-8364-a78981905997}</Project>
+      <Name>AbstractMotorFactoryModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AbstractMotorFactoryServiceDAL\AbstractMotorFactoryServiceDAL.csproj">
+      <Project>{a43b68a4-fe53-4be6-895e-d6e54c1c6d2f}</Project>
+      <Name>AbstractMotorFactoryServiceDAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
