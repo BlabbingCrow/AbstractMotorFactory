@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>4fca8e98-c209-45fe-9b83-b8abbff9499d</ProjectGuid>
+    <ProjectGuid>{DEA4B232-29E8-4DF5-860D-BF8055EE7BD5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AbstractMotorFactory</RootNamespace>
-    <AssemblyName>AbstractMotorFactory</AssemblyName>
+    <RootNamespace>AbstractMotorFactoryServiceImplementList</RootNamespace>
+    <AssemblyName>AbstractMotorFactoryServiceImplementList</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,24 +31,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System"/>
-    
-    <Reference Include="System.Core"/>
-    <Reference Include="System.Xml.Linq"/>
-    <Reference Include="System.Data.DataSetExtensions"/>
-    
-    
-    <Reference Include="Microsoft.CSharp"/>
-    
-    <Reference Include="System.Data"/>
-    
-    <Reference Include="System.Net.Http"/>
-    
-    <Reference Include="System.Xml"/>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="DataListSingleton.cs" />
+    <Compile Include="Implementations\CoreServiceList.cs" />
+    <Compile Include="Implementations\CustomerServiceList.cs" />
+    <Compile Include="Implementations\DetailServiceList.cs" />
+    <Compile Include="Implementations\EngineServiceList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AbstractMotorFactoryModel\AbstractMotorFactoryModel.csproj">
+      <Project>{53ed09be-8053-4b6f-8364-a78981905997}</Project>
+      <Name>AbstractMotorFactoryModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AbstractMotorFactoryServiceDAL\AbstractMotorFactoryServiceDAL.csproj">
+      <Project>{a43b68a4-fe53-4be6-895e-d6e54c1c6d2f}</Project>
+      <Name>AbstractMotorFactoryServiceDAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
- </Project>
+</Project>
