@@ -1,9 +1,9 @@
 ﻿namespace AbstractMotorFactoryServiceDAL.BindingModels
 {
-    public class CustomerBindingModel
+    public class StorageBindingModel
     {
         public int Id { get; set; }
 
-        public string CustomerFIO { get; set; }
+        public string StorageName { get; set; }
     }
 }

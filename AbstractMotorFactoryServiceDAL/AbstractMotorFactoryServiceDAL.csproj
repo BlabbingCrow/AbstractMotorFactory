@@ -46,19 +46,21 @@
     <Compile Include="BindingModels\EngineBindingModel.cs" />
     <Compile Include="BindingModels\EngineDetailBindingModel.cs" />
     <Compile Include="BindingModels\ProductionBindingModel.cs" />
-    <Compile Include="BindingModels\ProductionStatusBindingModel.cs" />
+    <Compile Include="BindingModels\StorageBindingModel.cs" />
+    <Compile Include="BindingModels\StorageDetailBindingModel.cs" />
     <Compile Include="Interfaces\ICoreService.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
     <Compile Include="Interfaces\IDetailService.cs" />
-    <Compile Include="Interfaces\IEngineDetailService.cs" />
     <Compile Include="Interfaces\IEngineService.cs" />
+    <Compile Include="Interfaces\IStorageService.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\DetailViewModel.cs" />
     <Compile Include="ViewModels\EngineDetailViewModel.cs" />
     <Compile Include="ViewModels\EngineViewModel.cs" />
-    <Compile Include="ViewModels\ProductionStatusViewModel.cs" />
     <Compile Include="ViewModels\ProductionViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\StorageDetailViewModel.cs" />
+    <Compile Include="ViewModels\StorageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AbstractMotorFactoryModel\AbstractMotorFactoryModel.csproj">

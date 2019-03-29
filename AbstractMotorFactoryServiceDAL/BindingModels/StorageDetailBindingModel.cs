@@ -1,10 +1,10 @@
 ﻿namespace AbstractMotorFactoryServiceDAL.BindingModels
 {
-    public class EngineDetailBindingModel
+    public class StorageDetailBindingModel
     {
         public int Id { get; set; }
 
-        public int EngineId { get; set; }
+        public int StorageId { get; set; }
 
         public int DetailId { get; set; }
 

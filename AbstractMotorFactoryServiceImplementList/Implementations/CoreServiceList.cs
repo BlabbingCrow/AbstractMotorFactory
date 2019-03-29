@@ -4,6 +4,7 @@ using AbstractMotorFactoryServiceDAL.Interfaces;
 using AbstractMotorFactoryServiceDAL.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AbstractMotorFactoryServiceImplementList.Implementations
 {
@@ -18,61 +19,34 @@ namespace AbstractMotorFactoryServiceImplementList.Implementations
 
         public List<ProductionViewModel> GetList()
         {
-            List<ProductionViewModel> result = new List<ProductionViewModel>();
-            for (int i = 0; i < source.Productions.Count; ++i)
-            {
-                string customerFIO = string.Empty;
-                for (int j = 0; j < source.Customers.Count; ++j)
+            List<ProductionViewModel> result = source.Productions
+                .Select(rec => new ProductionViewModel
                 {
-                    if (source.Customers[j].Id == source.Productions[i].CustomerId)
-                    {
-                        customerFIO = source.Customers[j].CustomerFIO;
-                        break;
-                    }
-                }
-                string engineName = string.Empty;
-                for (int j = 0; j < source.Engines.Count; ++j)
-                {
-                    if (source.Engines[j].Id == source.Productions[i].EngineId)
-                    {
-                        engineName = source.Engines[j].EngineName;
-                        break;
-                    }
-                }
-                result.Add(new ProductionViewModel
-                {
-                    Id = source.Productions[i].Id,
-                    CustomerId = source.Productions[i].CustomerId,
-                    CustomerFIO = customerFIO,
-                    EngineId = source.Productions[i].EngineId,
-                    EngineName = engineName,
-                    Number = source.Productions[i].Numder,
-                    Amount = source.Productions[i].Amount,
-                    TimeCreate = source.Productions[i].TimeCreate.ToLongDateString(),
-                    TimeImplement = source.Productions[i].TimeImplement?.ToLongDateString(),
-                    State = source.Productions[i].State.ToString()
-                });
-            }
-            return result;
+                    Id = rec.Id,
+                    CustomerId = rec.CustomerId,
+                    EngineId = rec.EngineId,
+                    TimeCreate = rec.TimeCreate.ToLongDateString(),
+                    TimeImplement = rec.TimeImplement?.ToLongDateString(),
+                    State = rec.State.ToString(),
+                    Number = rec.Number,
+                    Amount = rec.Amount,
+                    CustomerFIO = source.Customers.FirstOrDefault(recC => recC.Id == rec.CustomerId)?.CustomerFIO,
+                    EngineName = source.Engines.FirstOrDefault(recP => recP.Id == rec.EngineId)?.EngineName
+                })
+                .ToList();
+            return result;
         }
 
         public void CreateOrder(ProductionBindingModel model)
         {
-            int maxId = 0;
-            for (int i = 0; i < source.Productions.Count; ++i)
-            {
-                if (source.Productions[i].Id > maxId)
-                {
-                    maxId = source.Customers[i].Id;
-                }
-            }
+            int maxId = source.Productions.Count > 0 ? source.Productions.Max(rec => rec.Id) : 0;
             source.Productions.Add(new Production
             {
                 Id = maxId + 1,
                 CustomerId = model.CustomerId,
                 EngineId = model.EngineId,
                 TimeCreate = DateTime.Now,
-                Numder = model.Number,
+                Number = model.Number,
                 Amount = model.Amount,
                 State = ProductionStatus.Принят
             });
@@ -80,70 +54,97 @@ namespace AbstractMotorFactoryServiceImplementList.Implementations
 
         public void TakeOrderInWork(ProductionBindingModel model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Productions.Count; ++i)
-            {
-                if (source.Productions[i].Id == model.Id)
-                {
-                    index = i;
-                    break;
-                }
-            }
-            if (index == -1)
+            Production element = source.Productions.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            if (source.Productions[index].State != ProductionStatus.Принят)
+            if (element.State != ProductionStatus.Принят)
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
             }
-            source.Productions[index].TimeImplement = DateTime.Now;
-            source.Productions[index].State = ProductionStatus.Выполняется;
+
+            var engineDetails = source.EngineDetails.Where(rec => rec.EngineId == element.EngineId);
+            foreach (var engineDetail in engineDetails)
+            {
+                int countOnStocks = source.StorageDetails.Where(rec => rec.DetailId == engineDetail.DetailId).Sum(rec => rec.Number);
+                if (countOnStocks < engineDetail.Number * element.Number)
+                {
+                    var componentName = source.Details.FirstOrDefault(rec => rec.Id == engineDetail.DetailId);
+                    throw new Exception("Не достаточно компонента " + componentName?.DetailName + " требуется " + (engineDetail.Number * element.Number) + ", в наличии " + countOnStocks);
+                }
+            }
+
+            foreach (var engineDetail in engineDetails)
+            {
+                int numInStorage = engineDetail.Number * element.Number;
+                var storageDetails = source.StorageDetails.Where(rec => rec.DetailId == engineDetail.DetailId);
+                foreach (var storageDetail in storageDetails)
+                {
+                    if (storageDetail.Number >= numInStorage)
+                    {
+                        storageDetail.Number -= numInStorage;
+                        break;
+                    }
+                    else
+                    {
+                        numInStorage -= storageDetail.Number;
+                        storageDetail.Number = 0;
+                    }
+                }
+            }
+            element.TimeImplement = DateTime.Now;
+            element.State = ProductionStatus.Выполняется;
         }
 
         public void FinishOrder(ProductionBindingModel model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Productions.Count; ++i)
-            {
-                if (source.Customers[i].Id == model.Id)
-                {
-                    index = i;
-                    break;
-                }
-            }
-            if (index == -1)
+            Production element = source.Productions.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            if (source.Productions[index].State != ProductionStatus.Выполняется)
+            if (element.State != ProductionStatus.Выполняется)
             {
                 throw new Exception("Заказ не в статусе \"Выполняется\"");
             }
-            source.Productions[index].State = ProductionStatus.Готов;
-
+            element.State = ProductionStatus.Готов;
         }
 
         public void PayOrder(ProductionBindingModel model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Productions.Count; ++i)
-            {
-                if (source.Customers[i].Id == model.Id)
-                {
-                    index = i;
-                    break;
-                }
-            }
-            if (index == -1)
+            Production element = source.Productions.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            if (source.Productions[index].State != ProductionStatus.Готов)
+            if (element.State != ProductionStatus.Готов)
             {
                 throw new Exception("Заказ не в статусе \"Готов\"");
             }
-            source.Productions[index].State = ProductionStatus.Оплачен;
+            element.State = ProductionStatus.Оплачен;
         }
+
+        public void PutDetailOnStorage(StorageDetailBindingModel model)
+        {
+            StorageDetail element = source.StorageDetails.FirstOrDefault(rec =>
+                rec.StorageId == model.StorageId && rec.DetailId == model.DetailId);
+            if (element != null)
+            {
+                element.Number += model.Number;
+            }
+            else
+            {
+                int maxId = source.StorageDetails.Count > 0 ?
+                source.StorageDetails.Max(rec => rec.Id) : 0;
+                source.StorageDetails.Add(new StorageDetail
+                {
+                    Id = ++maxId,
+                    StorageId = model.StorageId,
+                    DetailId = model.DetailId,
+                    Number = model.Number
+                });
+            }
+        }
     }
 }

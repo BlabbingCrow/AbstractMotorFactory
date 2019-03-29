@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AbstractMotorFactoryModel
 {
@@ -12,9 +8,13 @@ namespace AbstractMotorFactoryModel
 
         public int CustomerId { get; set; }
 
+        public string CustomerFIO { get; set; }
+
         public int EngineId { get; set; }
 
-        public int Numder { get; set; }
+        public string EngineName { get; set; }
+
+        public int Number { get; set; }
 
         public decimal Amount { get; set; }
 

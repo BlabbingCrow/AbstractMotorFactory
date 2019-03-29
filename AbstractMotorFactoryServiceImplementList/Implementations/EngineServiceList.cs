@@ -4,6 +4,7 @@ using AbstractMotorFactoryServiceDAL.Interfaces;
 using AbstractMotorFactoryServiceDAL.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AbstractMotorFactoryServiceImplementList.Implementations
 {
@@ -18,240 +19,160 @@ namespace AbstractMotorFactoryServiceImplementList.Implementations
 
         public List<EngineViewModel> GetList()
         {
-            List<EngineViewModel> result = new List<EngineViewModel>();
-            for (int i = 0; i < source.Engines.Count; ++i)
-            {
-                List<EngineDetailViewModel> engineDetails = new List<EngineDetailViewModel> ();
-                for (int j = 0; j < source.EngineDetails.Count; ++j)
+            List<EngineViewModel> result = source.Engines
+                .Select(rec => new EngineViewModel
                 {
-                    if (source.EngineDetails[j].EngineId == source.Engines[i].Id)
-                    {
-                        string detailName = string.Empty;
-                        for (int k = 0; k < source.Details.Count; ++k)
+                    Id = rec.Id,
+                    EngineName = rec.EngineName,
+                    Cost = rec.Cost,
+                    EngineDetails = source.EngineDetails
+                        .Where(recED => recED.EngineId == rec.Id)
+                        .Select(recED => new EngineDetailViewModel
                         {
-                            if (source.EngineDetails[j].DetailId == source.Details[k].Id)
-                            {
-                                detailName = source.Details[k].DetailName;
-                                break;
-                            }
-                        }
-                        engineDetails.Add(new EngineDetailViewModel
-                        {
-                            Id = source.EngineDetails[j].Id,
-                            EngineId = source.EngineDetails[j].EngineId,
-                            DetailId = source.EngineDetails[j].DetailId,
-                            DetailName = detailName,
-                            Number = source.EngineDetails[j].Number
-                        });
-                    }
-                }
-                result.Add(new EngineViewModel
-                {
-                    Id = source.Engines[i].Id,
-                    EngineName = source.Engines[i].EngineName,
-                    Cost = source.Engines[i].Cost,
-                    EngineDetails = engineDetails
-                });
-            }
+                            Id = recED.Id,
+                            EngineId = recED.EngineId,
+                            DetailId = recED.DetailId,
+                            DetailName = source.Details.FirstOrDefault(recD =>
+                            recD.Id == recED.DetailId)?.DetailName,
+                            Number = recED.Number
+                        })
+                        .ToList()
+                })
+                .ToList();
             return result;
         }
 
         public EngineViewModel GetElement(int id)
         {
-            for (int i = 0; i < source.Engines.Count; ++i)
+            Engine element = source.Engines.FirstOrDefault(rec => rec.Id == id);
+            if (element != null)
             {
-                List<EngineDetailViewModel> engineDetails = new List<EngineDetailViewModel>();
-                for (int j = 0; j < source.EngineDetails.Count; ++j)
+                return new EngineViewModel
                 {
-                    if (source.EngineDetails[j].EngineId == source.Engines[i].Id)
-                    {
-                        string detailName = string.Empty;
-                        for (int k = 0; k < source.Engines.Count; ++k)
+                    Id = element.Id,
+                    EngineName = element.EngineName,
+                    Cost = element.Cost,
+                    EngineDetails = source.EngineDetails
+                        .Where(recED => recED.EngineId == element.Id)
+                        .Select(recED => new EngineDetailViewModel
                         {
-                            if (source.EngineDetails[j].DetailId == source.Details[k].Id)
-                            {
-                                detailName = source.Details[k].DetailName;
-                                break;
-                            }
-                        }
-                        engineDetails.Add(new EngineDetailViewModel
-                        {
-                            Id = source.EngineDetails[j].Id,
-                            EngineId = source.EngineDetails[j].EngineId,
-                            DetailId = source.EngineDetails[j].DetailId,
-                            DetailName = detailName,
-                            Number = source.EngineDetails[j].Number
-                        });
-                    }
-                }
-                if (source.Engines[i].Id == id)
-                {
-                    return new EngineViewModel
-                    {
-                        Id = source.Engines[i].Id,
-                        EngineName = source.Engines[i].EngineName,
-                        Cost = source.Engines[i].Cost,
-                        EngineDetails = engineDetails
-                    };
-                }
+                            Id = recED.Id,
+                            EngineId = recED.EngineId,
+                            DetailId = recED.DetailId,
+                            DetailName = source.Details.FirstOrDefault(recD =>
+                            recD.Id == recED.DetailId)?.DetailName,
+                            Number = recED.Number
+                        })
+                        .ToList()
+                };
             }
-            throw new Exception("Элемент не найден");
+            throw new Exception("Элемент не найден");
         }
 
         public void AddElement(EngineBindingModel model)
         {
-            int maxId = 0;
-            for (int i = 0; i < source.Engines.Count; ++i)
+            Engine element = source.Engines.FirstOrDefault(rec => rec.EngineName == model.EngineName);
+            if (element != null)
             {
-                if (source.Engines[i].Id > maxId)
-                {
-                    maxId = source.Engines[i].Id;
-                }
-                if (source.Engines[i].EngineName == model.EngineName)
-                {
-                    throw new Exception("Уже есть изделие с таким названием");
-                }
+                throw new Exception("Уже есть двигатель с таким названием");
             }
+            int maxId = source.Engines.Count > 0 ? source.Engines.Max(rec => rec.Id) : 0;
             source.Engines.Add(new Engine
             {
                 Id = maxId + 1,
                 EngineName = model.EngineName,
                 Cost = model.Cost
             });
-            int maxPCId = 0;
-            for (int i = 0; i < source.EngineDetails.Count; ++i)
-            {
-                if (source.EngineDetails[i].Id > maxPCId)
-                {
-                    maxPCId = source.EngineDetails[i].Id;
-                }
-            }
-            for (int i = 0; i < model.EngineDetails.Count; ++i)
-            {
-                for (int j = 1; j < model.EngineDetails.Count; ++j)
-                {
-                    if (model.EngineDetails[i].DetailId ==
-                    model.EngineDetails[j].DetailId)
-                    {
-                        model.EngineDetails[i].Number += model.EngineDetails[j].Number;
-                        model.EngineDetails.RemoveAt(j--);
-                    }
-                }
-            }
-            for (int i = 0; i < model.EngineDetails.Count; ++i)
+
+            int maxEDId = source.EngineDetails.Count > 0 ? source.EngineDetails.Max(rec => rec.Id) : 0;
+
+            var groupDetails = model.EngineDetails
+                                        .GroupBy(rec => rec.DetailId)
+                                        .Select(rec => new
+                                        {
+                                            DetailId = rec.Key,
+                                            Number = rec.Sum(r => r.Number)
+                                        });
+
+            foreach (var groupComponent in groupDetails)
             {
                 source.EngineDetails.Add(new EngineDetail
                 {
-                    Id = ++maxPCId,
+                    Id = ++maxEDId,
                     EngineId = maxId + 1,
-                    DetailId = model.EngineDetails[i].DetailId,
-                    Number = model.EngineDetails[i].Number
+                    DetailId = groupComponent.DetailId,
+                    Number = groupComponent.Number
                 });
             }
         }
 
         public void UpdElement(EngineBindingModel model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Engines.Count; ++i)
+            Engine element = source.Engines.FirstOrDefault(rec => rec.EngineName == model.EngineName && rec.Id != model.Id);
+            if (element != null)
             {
-                if (source.Engines[i].Id == model.Id)
-                {
-                    index = i;
-                }
-                if (source.Engines[i].EngineName == model.EngineName &&
-                source.Engines[i].Id != model.Id)
-                {
-                    throw new Exception("Уже есть изделие с таким названием");
-                }
+                throw new Exception("Уже есть изделие с таким названием");
             }
-            if (index == -1)
+            element = source.Engines.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            source.Engines[index].EngineName = model.EngineName;
-            source.Engines[index].Cost = model.Cost;
-            int maxPCId = 0;
-            for (int i = 0; i < source.EngineDetails.Count; ++i)
+            element.EngineName = model.EngineName;
+            element.Cost = model.Cost;
+            int maxPCId = source.EngineDetails.Count > 0 ? source.EngineDetails.Max(rec => rec.Id) : 0;
+
+            var compIds = model.EngineDetails.Select(rec => rec.DetailId).Distinct();
+            var updateDetails = source.EngineDetails.Where(rec => rec.EngineId == model.Id && compIds.Contains(rec.DetailId));
+            foreach (var updateDetail in updateDetails)
             {
-                if (source.EngineDetails[i].Id > maxPCId)
-                {
-                    maxPCId = source.EngineDetails[i].Id;
-                }
+                updateDetail.Number = model.EngineDetails.FirstOrDefault(rec =>
+                    rec.Id == updateDetail.Id).Number;
             }
-            // обновляем существуюущие компоненты
-            for (int i = 0; i < source.EngineDetails.Count; ++i)
+            source.EngineDetails.RemoveAll(rec => rec.EngineId == model.Id &&
+                !compIds.Contains(rec.DetailId));
+
+            var groupDetails = model.EngineDetails
+                                        .Where(rec => rec.Id == 0)
+                                        .GroupBy(rec => rec.DetailId)
+                                        .Select(rec => new
+                                        {
+                                            ComponentId = rec.Key,
+                                            Number = rec.Sum(r => r.Number)
+                                        });
+            foreach (var groupDetail in groupDetails)
             {
-                if (source.EngineDetails[i].EngineId == model.Id)
+                EngineDetail elementPC = source.EngineDetails.FirstOrDefault(rec
+                    => rec.EngineId == model.Id && rec.DetailId == groupDetail.ComponentId);
+                if (elementPC != null)
                 {
-                    bool flag = true;
-                    for (int j = 0; j < model.EngineDetails.Count; ++j)
-                    {
-                        // если встретили, то изменяем количество
-                        if (source.EngineDetails[i].Id ==
-                       model.EngineDetails[j].Id)
-                        {
-                            source.EngineDetails[i].Number = model.EngineDetails[j].Number;
-                            flag = false;
-                            break;
-                        }
-                    }
-                    // если не встретили, то удаляем
-                    if (flag)
-                    {
-                        source.EngineDetails.RemoveAt(i--);
-                    }
+                    elementPC.Number += groupDetail.Number;
                 }
-            }
-            // новые записи
-            for (int i = 0; i < model.EngineDetails.Count; ++i)
-            {
-                if (model.EngineDetails[i].Id == 0)
+                else
                 {
-                    // ищем дубли
-                    for (int j = 0; j < source.EngineDetails.Count; ++j)
+                    source.EngineDetails.Add(new EngineDetail
                     {
-                        if (source.EngineDetails[j].EngineId == model.Id && source.EngineDetails[j].DetailId == model.EngineDetails[i].DetailId)
-                        {
-                            source.EngineDetails[j].Number += model.EngineDetails[i].Number;
-                            model.EngineDetails[i].Id = source.EngineDetails[j].Id;
-                            break;
-                        }
-                    }
-                    // если не нашли дубли, то новая запись
-                    if (model.EngineDetails[i].Id == 0)
-                    {
-                        source.EngineDetails.Add(new EngineDetail
-                        {
-                            Id = ++maxPCId,
-                            EngineId = model.Id,
-                            DetailId = model.EngineDetails[i].DetailId,
-                            Number = model.EngineDetails[i].Number
-                        });
-                    }
+                        Id = ++maxPCId,
+                        EngineId = model.Id,
+                        DetailId = groupDetail.ComponentId,
+                        Number = groupDetail.Number
+                    });
                 }
             }
         }
 
         public void DelElement(int id)
         {
-            // удаяем записи по компонентам при удалении изделия
-            for (int i = 0; i < source.EngineDetails.Count; ++i)
+            Engine element = source.Engines.FirstOrDefault(rec => rec.Id == id);
+            if (element != null)
             {
-                if (source.EngineDetails[i].EngineId == id)
-                {
-                    source.EngineDetails.RemoveAt(i--);
-                }
+                source.EngineDetails.RemoveAll(rec => rec.EngineId == id);
+                source.Engines.Remove(element);
             }
-            for (int i = 0; i < source.Engines.Count; ++i)
+            else
             {
-                if (source.Engines[i].Id == id)
-                {
-                    source.Engines.RemoveAt(i);
-                    return;
-                }
+                throw new Exception("Элемент не найден");
             }
-            throw new Exception("Элемент не найден");
         }
     }
 }

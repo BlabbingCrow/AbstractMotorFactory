@@ -1,9 +1,9 @@
 ﻿namespace AbstractMotorFactoryModel
 {
-    public class Detail
+    public class Storage
     {
         public int Id { get; set; }
 
-        public string DetailName { get; set; }
+        public string StorageName { get; set; }
     }
 }
