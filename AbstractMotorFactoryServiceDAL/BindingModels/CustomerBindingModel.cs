@@ -1,4 +1,4 @@
-﻿namespace AbstractMotorFactoryServiceDAL.BindingModels
+namespace AbstractMotorFactoryServiceDAL.BindingModels
 {
     public class CustomerBindingModel
     {
