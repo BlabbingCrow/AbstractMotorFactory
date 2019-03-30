@@ -111,7 +111,7 @@ namespace AbstractMotorFactoryView
                     CustomerId = Convert.ToInt32(comboBoxCustomer.SelectedValue),
                     EngineId = Convert.ToInt32(comboBoxEngine.SelectedValue),
                     Number = Convert.ToInt32(textBoxNumber.Text),
-                    Amount = Convert.ToInt32(textBoxSum.Text)
+                    Amount = (int)Convert.ToDecimal(textBoxSum.Text)
                 });
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;

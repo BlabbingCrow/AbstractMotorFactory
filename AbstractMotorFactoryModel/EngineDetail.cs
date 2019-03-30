@@ -1,3 +1,5 @@
+﻿using System.ComponentModel.DataAnnotations;
+
 namespace AbstractMotorFactoryModel
 {
     public class EngineDetail
@@ -8,6 +10,11 @@ namespace AbstractMotorFactoryModel
 
         public int DetailId { get; set; }
 
+        [Required]
         public int Number { get; set; }
+
+        public virtual Engine Engine { get; set; }
+
+        public virtual Detail Detail { get; set; }
     }
 }
