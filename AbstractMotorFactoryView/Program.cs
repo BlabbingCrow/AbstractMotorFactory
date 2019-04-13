@@ -30,6 +30,7 @@ namespace AbstractMotorFactoryView
             currentContainer.RegisterType<IEngineService, EngineServiceDB>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<ICoreService, CoreServiceDB>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IStorageService, StorageServiceDB>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IReportService, ReportServiceDB>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
     }
