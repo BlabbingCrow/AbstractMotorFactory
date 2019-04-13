@@ -72,6 +72,8 @@
       <Name>AbstractMotorFactoryModel</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Properties\DataSources\AbstractMotorFactoryServiceDAL.ViewModels.CustomerProductionsViewModel.datasource" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

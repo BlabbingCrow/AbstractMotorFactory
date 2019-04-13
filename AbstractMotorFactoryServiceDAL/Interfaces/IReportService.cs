@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using AbstractMotorFactoryServiceDAL.BindingModels;
+using AbstractMotorFactoryServiceDAL.ViewModels;
 
 namespace AbstractMotorFactoryServiceDAL.Interfaces
 {
@@ -6,11 +8,11 @@ namespace AbstractMotorFactoryServiceDAL.Interfaces
     {
         void SaveProductPrice(ReportBindingModel model);
 
-        List<StorageLoadViewModel> GetStocksLoad();
+        List<StoragesLoadViewModel> GetStocksLoad();
 
         void SaveStocksLoad(ReportBindingModel model);
 
-        List<CustomerProductionModel> GetClientOrders(ReportBindingModel model);
+        List<CustomerProductionsViewModel> GetClientOrders(ReportBindingModel model);
 
         void SaveClientOrders(ReportBindingModel model);
     }

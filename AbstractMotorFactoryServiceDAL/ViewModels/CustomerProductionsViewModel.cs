@@ -1,4 +1,6 @@
-﻿namespace AbstractMotorFactoryServiceDAL.ViewModels
+﻿using System.ComponentModel;
+
+namespace AbstractMotorFactoryServiceDAL.ViewModels
 {
     public class CustomerProductionsViewModel
     {
