@@ -4,21 +4,14 @@ using AbstractMotorFactoryServiceDAL.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractMotorFactoryView
 {
     public partial class FormEngines : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
-        private readonly IEngineService service;
-
-        public FormEngines(IEngineService service)
+        public FormEngines()
         {
             InitializeComponent();
-            this.service = service;
         }
 
         private void FormClients_Load(object sender, EventArgs e)
@@ -30,7 +23,7 @@ namespace AbstractMotorFactoryView
         {
             try
             {
-                List<EngineViewModel> list = service.GetList();
+                List<EngineViewModel> list = APIClient.GetRequest<List<EngineViewModel>>("api/Engine/GetList");
                 if (list != null)
                 {
                     dataGridView1.DataSource = list;
@@ -47,7 +40,7 @@ namespace AbstractMotorFactoryView
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormEngine>();
+            var form = new FormEngine();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
@@ -58,7 +51,7 @@ namespace AbstractMotorFactoryView
         {
             if (dataGridView1.SelectedRows.Count == 1)
             {
-                var form = Container.Resolve<FormEngine>();
+                var form = new FormEngine();
                 form.Id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
                 if (form.ShowDialog() == DialogResult.OK)
                 {
@@ -77,7 +70,7 @@ namespace AbstractMotorFactoryView
                     int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        service.DelElement(id);
+                        APIClient.PostRequest<EngineBindingModel, bool>("api/Engine/DelElement", new EngineBindingModel { Id = id });
                     }
                     catch (Exception ex)
                     {

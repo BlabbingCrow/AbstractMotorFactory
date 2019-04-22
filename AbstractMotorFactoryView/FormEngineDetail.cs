@@ -3,36 +3,29 @@ using AbstractMotorFactoryServiceDAL.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractMotorFactoryView
 {
     public partial class FormEngineDetail : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
         public EngineDetailViewModel Model
         {
             set { model = value; }
             get { return model; }
         }
 
-        private readonly IDetailService service;
-
         private EngineDetailViewModel model;
 
-        public FormEngineDetail(IDetailService service)
+        public FormEngineDetail()
         {
             InitializeComponent();
-            this.service = service;
         }
 
         private void FormEngineDetail_Load(object sender, EventArgs e)
         {
             try
             {
-                List<DetailViewModel> list = service.GetList();
+                List<DetailViewModel> list = APIClient.GetRequest<List<DetailViewModel>>("api/Detail/GetList");
                 if (list != null)
                 {
                     comboBox1.DisplayMember = "DetailName";
