@@ -68,13 +68,13 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
                     {
                         throw new Exception("Заказ не в статусе \"Принят\"");
                     }
-                    var engineDetails = context.EngineDetails.Include(rec => rec.Detail).Where(rec => rec.EngineId == element.EngineId);
+                    var engineDetails = context.EngineDetails.Include(rec => rec.Detail).Where(rec => rec.EngineId == element.EngineId).ToList();
 
                     foreach (var productComponent in engineDetails)
                     {
                         int NumberOnStocks = productComponent.Number * element.Number;
                         var storageComponents = context.StorageDetails.Where(rec =>
-                        rec.DetailId == productComponent.DetailId);
+                        rec.DetailId == productComponent.DetailId).ToList();
                         foreach (var stockComponent in storageComponents)
                         {
                             if (stockComponent.Number >= NumberOnStocks)
