@@ -13,10 +13,12 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
     public class CoreServiceDB : ICoreService
     {
         private AbstractDbContext context;
+
         public CoreServiceDB(AbstractDbContext context)
         {
             this.context = context;
         }
+
         public List<ProductionViewModel> GetList()
         {
             List<ProductionViewModel> result = context.Productions.Select(rec => new ProductionViewModel
@@ -40,6 +42,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
             .ToList();
             return result;
         }
+
         public void CreateOrder(ProductionBindingModel model)
         {
             context.Productions.Add(new Production
@@ -53,6 +56,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
             });
             context.SaveChanges();
         }
+
         public void TakeOrderInWork(ProductionBindingModel model)
         {
             using (var transaction = context.Database.BeginTransaction())
@@ -109,6 +113,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
                 }
             }
         }
+
         public void FinishOrder(ProductionBindingModel model)
         {
             Production element = context.Productions.FirstOrDefault(rec => rec.Id == model.Id);
@@ -123,6 +128,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
             element.State = ProductionStatus.Готов;
             context.SaveChanges();
         }
+
         public void PayOrder(ProductionBindingModel model)
         {
             Production element = context.Productions.FirstOrDefault(rec => rec.Id == model.Id);
@@ -137,6 +143,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
             element.State = ProductionStatus.Оплачен;
             context.SaveChanges();
         }
+
         public void PutDetailOnStorage(StorageDetailBindingModel model)
         {
             StorageDetail element = context.StorageDetails.FirstOrDefault(rec => rec.StorageId == model.StorageId && rec.DetailId == model.DetailId);
