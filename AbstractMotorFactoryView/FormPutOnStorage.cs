@@ -4,34 +4,21 @@ using AbstractMotorFactoryServiceDAL.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractMotorFactoryView
 {
     public partial class FormPutOnStorage : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
-        private readonly IStorageService serviceS;
-
-        private readonly IDetailService serviceD;
-
-        private readonly ICoreService serviceC;
-
-        public FormPutOnStorage(IStorageService serviceS, IDetailService serviceD, ICoreService serviceC)
+        public FormPutOnStorage()
         {
             InitializeComponent();
-            this.serviceS = serviceS;
-            this.serviceD = serviceD;
-            this.serviceC = serviceC;
         }
 
         private void FormPutOnStorage_Load(object sender, EventArgs e)
         {
             try
             {
-                List<DetailViewModel> listD = serviceD.GetList();
+                List<DetailViewModel> listD = APIClient.GetRequest<List<DetailViewModel>>("api/Detail/GetList");
                 if (listD != null)
                 {
                     comboBoxDetail.DisplayMember = "DetailName";
@@ -39,7 +26,7 @@ namespace AbstractMotorFactoryView
                     comboBoxDetail.DataSource = listD;
                     comboBoxDetail.SelectedItem = null;
                 }
-                List<StorageViewModel> listS = serviceS.GetList();
+                List<StorageViewModel> listS = APIClient.GetRequest<List<StorageViewModel>>("api/Storage/GetList");
                 if (listS != null)
                 {
                     comboBoxStorage.DisplayMember = "StorageName";
@@ -74,7 +61,7 @@ namespace AbstractMotorFactoryView
             }
             try
             {
-                serviceC.PutDetailOnStorage(new StorageDetailBindingModel
+                APIClient.PostRequest<StorageDetailBindingModel, bool>("api/Core/PutDetailOnStorage", new StorageDetailBindingModel
                 {
                     DetailId = Convert.ToInt32(comboBoxDetail.SelectedValue),
                     StorageId = Convert.ToInt32(comboBoxStorage.SelectedValue),

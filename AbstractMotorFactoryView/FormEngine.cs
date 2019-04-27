@@ -4,28 +4,21 @@ using AbstractMotorFactoryServiceDAL.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractMotorFactoryView
 {
     public partial class FormEngine : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
         public int Id { set { id = value; } }
-
-        private readonly IEngineService service;
 
         private int? id;
 
         private List<EngineDetailViewModel> productComponents;
 
 
-        public FormEngine(IEngineService service)
+        public FormEngine()
         {
             InitializeComponent();
-            this.service = service;
         }
 
         private void FormEngine_Load(object sender, EventArgs e)
@@ -34,7 +27,7 @@ namespace AbstractMotorFactoryView
             {
                 try
                 {
-                    EngineViewModel view = service.GetElement(id.Value);
+                    EngineViewModel view = APIClient.GetRequest<EngineViewModel>("api/Engine/Get/" + id.Value);
                     if (view != null)
                     {
                         textBox1.Text = view.EngineName;
@@ -78,7 +71,7 @@ namespace AbstractMotorFactoryView
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormEngineDetail>();
+            var form = new FormEngineDetail();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 if (form.Model != null)
@@ -98,9 +91,8 @@ namespace AbstractMotorFactoryView
         {
             if (dataGridView1.SelectedRows.Count == 1)
             {
-                var form = Container.Resolve<FormEngineDetail>();
-                form.Model =
-               productComponents[dataGridView1.SelectedRows[0].Cells[0].RowIndex];
+                var form = new FormEngineDetail();
+                form.Model = productComponents[dataGridView1.SelectedRows[0].Cells[0].RowIndex];
                 if (form.ShowDialog() == DialogResult.OK)
                 {
                     productComponents[dataGridView1.SelectedRows[0].Cells[0].RowIndex] = form.Model;
@@ -165,7 +157,7 @@ namespace AbstractMotorFactoryView
                 }
                 if (id.HasValue)
                 {
-                    service.UpdElement(new EngineBindingModel
+                    APIClient.PostRequest<EngineBindingModel, bool>("api/Engine/UpdElement", new EngineBindingModel
                     {
                         Id = id.Value,
                         EngineName = textBox1.Text,
@@ -175,7 +167,7 @@ namespace AbstractMotorFactoryView
                 }
                 else
                 {
-                    service.AddElement(new EngineBindingModel
+                    APIClient.PostRequest<EngineBindingModel, bool>("api/Engine/AddElement", new EngineBindingModel
                     {
                         EngineName = textBox1.Text,
                         Cost = Convert.ToInt32(textBox2.Text),

@@ -4,35 +4,21 @@ using AbstractMotorFactoryServiceDAL.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractMotorFactoryView
 {
     public partial class FormCreateProduction : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
-        private readonly ICustomerService serviceCus;
-
-        private readonly IEngineService serviceEng;
-
-        private readonly ICoreService serviceCor;
-
-
-        public FormCreateProduction(ICustomerService serviceCus, IEngineService serviceEng, ICoreService serviceCor)
+        public FormCreateProduction()
         {
             InitializeComponent();
-            this.serviceCus = serviceCus;
-            this.serviceEng = serviceEng;
-            this.serviceCor = serviceCor;
         }
 
         private void FormCreateProduction_Load(object sender, EventArgs e)
         {
             try
             {
-                List<CustomerViewModel> listCus = serviceCus.GetList();
+                List<CustomerViewModel> listCus = APIClient.GetRequest<List<CustomerViewModel>>("api/Customer/GetList");
                 if (listCus != null)
                 {
                     comboBoxCustomer.DisplayMember = "CustomerFIO";
@@ -40,7 +26,7 @@ namespace AbstractMotorFactoryView
                     comboBoxCustomer.DataSource = listCus;
                     comboBoxCustomer.SelectedItem = null;
                 }
-                List<EngineViewModel> listEng = serviceEng.GetList();
+                List<EngineViewModel> listEng = APIClient.GetRequest<List<EngineViewModel>>("api/Engine/GetList");
                 if (listEng != null)
                 {
                     comboBoxEngine.DisplayMember = "EngineName";
@@ -64,7 +50,7 @@ namespace AbstractMotorFactoryView
                 try
                 {
                     int id = Convert.ToInt32(comboBoxEngine.SelectedValue);
-                    EngineViewModel engine = serviceEng.GetElement(id);
+                    EngineViewModel engine = APIClient.GetRequest<EngineViewModel>("api/Engine/Get/" + id);
                     int count = Convert.ToInt32(textBoxNumber.Text);
                     Console.WriteLine(Convert.ToInt32(engine.Cost));
                     Console.WriteLine(Convert.ToInt32(textBoxNumber.Text));
@@ -106,7 +92,7 @@ namespace AbstractMotorFactoryView
             }
             try
             {
-                serviceCor.CreateOrder(new ProductionBindingModel
+                APIClient.PostRequest<ProductionBindingModel, bool>("api/Core/CreateOrder", new ProductionBindingModel
                 {
                     CustomerId = Convert.ToInt32(comboBoxCustomer.SelectedValue),
                     EngineId = Convert.ToInt32(comboBoxEngine.SelectedValue),

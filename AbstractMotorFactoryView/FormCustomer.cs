@@ -3,26 +3,19 @@ using AbstractMotorFactoryServiceDAL.Interfaces;
 using AbstractMotorFactoryServiceDAL.ViewModels;
 using System;
 using System.Windows.Forms;
-using Unity;
 
 
 namespace AbstractMotorFactoryView
 {
     public partial class FormCustomer : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
         public int Id { set { id = value; } }
-
-        private readonly ICustomerService service;
 
         private int? id;
 
-        public FormCustomer(ICustomerService service)
+        public FormCustomer()
         {
             InitializeComponent();
-            this.service = service;
         }
 
         private void FormClient_Load(object sender, EventArgs e)
@@ -31,11 +24,8 @@ namespace AbstractMotorFactoryView
             {
                 try
                 {
-                    CustomerViewModel view = service.GetElement(id.Value);
-                    if (view != null)
-                    {
-                        textBox1.Text = view.CustomerFIO;
-                    }
+                    CustomerViewModel view = APIClient.GetRequest<CustomerViewModel>("api/Customer/Get/" + id.Value);
+                    textBox1.Text = view.CustomerFIO;
                 }
                 catch (Exception ex)
                 {
@@ -56,7 +46,7 @@ namespace AbstractMotorFactoryView
             {
                 if (id.HasValue)
                 {
-                    service.UpdElement(new CustomerBindingModel
+                    APIClient.PostRequest<CustomerBindingModel,bool>("api/Customer/UpdElement", new CustomerBindingModel
                     {
                         Id = id.Value,
                         CustomerFIO = textBox1.Text
@@ -64,7 +54,7 @@ namespace AbstractMotorFactoryView
                 }
                 else
                 {
-                    service.AddElement(new CustomerBindingModel
+                    APIClient.PostRequest<CustomerBindingModel, bool>("api/Customer/AddElement", new CustomerBindingModel
                     {
                         CustomerFIO = textBox1.Text
                     });

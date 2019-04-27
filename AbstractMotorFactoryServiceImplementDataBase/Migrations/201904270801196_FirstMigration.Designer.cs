@@ -13,7 +13,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201903300824423_FirstMigration"; }
+            get { return "201904270801196_FirstMigration"; }
         }
         
         string IMigrationMetadata.Source

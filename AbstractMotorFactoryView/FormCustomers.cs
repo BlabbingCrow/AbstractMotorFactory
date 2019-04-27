@@ -4,21 +4,14 @@ using AbstractMotorFactoryServiceDAL.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractMotorFactoryView
 {
     public partial class FormCustomers : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
-        private readonly ICustomerService service;
-
-        public FormCustomers(ICustomerService service)
+        public FormCustomers()
         {
             InitializeComponent();
-            this.service = service;
         }
 
         private void FormClients_Load(object sender, EventArgs e)
@@ -30,7 +23,7 @@ namespace AbstractMotorFactoryView
         {
             try
             {
-                List<CustomerViewModel> list = service.GetList();
+                List<CustomerViewModel> list = APIClient.GetRequest<List<CustomerViewModel>>("api/Customer/GetList");
                 if (list != null)
                 {
                     dataGridView1.DataSource = list;
@@ -46,7 +39,7 @@ namespace AbstractMotorFactoryView
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormCustomer>();
+            var form = new FormCustomer();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
@@ -57,8 +50,10 @@ namespace AbstractMotorFactoryView
         {
             if (dataGridView1.SelectedRows.Count == 1)
             {
-                var form = Container.Resolve<FormCustomer>();
-                form.Id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
+                var form = new FormCustomer
+                {
+                    Id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value)
+                };
                 if (form.ShowDialog() == DialogResult.OK)
                 {
                     LoadData();
@@ -76,7 +71,7 @@ namespace AbstractMotorFactoryView
                     int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        service.DelElement(id);
+                        APIClient.PostRequest<CustomerBindingModel,bool>("api/Customer/DelElement", new CustomerBindingModel { Id = id });
                     }
                     catch (Exception ex)
                     {

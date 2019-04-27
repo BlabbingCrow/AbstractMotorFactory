@@ -1,29 +1,23 @@
 ﻿using AbstractMotorFactoryServiceDAL.BindingModels;
-using AbstractMotorFactoryServiceDAL.Interfaces;
+using AbstractMotorFactoryServiceDAL.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractMotorFactoryView
 {
     public partial class FormStorageLoad : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
-        private readonly IReportService service;
-
-        public FormStorageLoad(IReportService service)
+        public FormStorageLoad()
         {
             InitializeComponent();
-            this.service = service;
         }
 
         private void FormStocksLoad_Load(object sender, EventArgs e)
         {
             try
             {
-                var dict = service.GetStocksLoad();
+                var dict = APIClient.GetRequest<List<StoragesLoadViewModel>>("api/Report/GetStocksLoad");
                 if (dict != null)
                 {
                     dataGridView.Rows.Clear();
@@ -55,7 +49,7 @@ namespace AbstractMotorFactoryView
             {
                 try
                 {
-                    service.SaveStocksLoad(new ReportBindingModel
+                    APIClient.PostRequest<ReportBindingModel, bool>("api/Report/SaveStocksLoad", new ReportBindingModel
                     {
                         FileName = sfd.FileName
                     });

@@ -3,26 +3,18 @@ using AbstractMotorFactoryServiceDAL.Interfaces;
 using AbstractMotorFactoryServiceDAL.ViewModels;
 using System;
 using System.Windows.Forms;
-using Unity;
-
 
 namespace AbstractMotorFactoryView
 {
     public partial class FormDetail : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
         public int Id { set { id = value; } }
-
-        private readonly IDetailService service;
 
         private int? id;
 
-        public FormDetail(IDetailService service)
+        public FormDetail()
         {
             InitializeComponent();
-            this.service = service;
         }
 
         private void FormClient_Load(object sender, EventArgs e)
@@ -31,7 +23,7 @@ namespace AbstractMotorFactoryView
             {
                 try
                 {
-                    DetailViewModel view = service.GetElement(id.Value);
+                    DetailViewModel view = APIClient.GetRequest<DetailViewModel>("api/Detail/Get/" + id.Value);
                     if (view != null)
                     {
                         textBox1.Text = view.DetailName;
@@ -56,7 +48,7 @@ namespace AbstractMotorFactoryView
             {
                 if (id.HasValue)
                 {
-                    service.UpdElement(new DetailBindingModel
+                    APIClient.PostRequest<DetailBindingModel, bool>("api/Detail/UpdElement", new DetailBindingModel
                     {
                         Id = id.Value,
                         DetailName = textBox1.Text
@@ -64,7 +56,7 @@ namespace AbstractMotorFactoryView
                 }
                 else
                 {
-                    service.AddElement(new DetailBindingModel
+                    APIClient.PostRequest<DetailBindingModel, bool>("api/Detail/AddElement", new DetailBindingModel
                     {
                         DetailName = textBox1.Text
                     });

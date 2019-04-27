@@ -4,31 +4,21 @@ using AbstractMotorFactoryServiceDAL.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractMotorFactoryView
 {
     public partial class FormMain : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
-        private readonly ICoreService service;
-
-        private readonly IReportService reportService;
-
-        public FormMain(ICoreService service, IReportService reportService)
+        public FormMain()
         {
             InitializeComponent();
-            this.service = service;
-            this.reportService = reportService;
         }
 
         private void LoadData()
         {
             try
             {
-                List<ProductionViewModel> list = service.GetList();
+                List<ProductionViewModel> list = APIClient.GetRequest<List<ProductionViewModel>>("api/Core/GetList");
                 if (list != null)
                 {
                     dataGridView1.DataSource = list;
@@ -47,39 +37,39 @@ namespace AbstractMotorFactoryView
 
         private void клиентыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormCustomers>();
+            var form = new FormCustomers();
             form.ShowDialog();
         }
 
         private void компонентыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormDetails>();
+            var form = new FormDetails();
             form.ShowDialog();
         }
 
         private void изделияToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormEngines>();
+            var form = new FormEngines();
             form.ShowDialog();
         }
 
         private void складыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormStorages>();
+            var form = new FormStorages();
             form.ShowDialog();
         }
 
         private void пополнитьСкладToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormPutOnStorage>();
+            var form = new FormPutOnStorage();
             form.ShowDialog();
         }
 
         private void buttonCreateProduction_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormCreateProduction>();
+            var form = new FormCreateProduction();
             form.ShowDialog();
-            LoadData();
+            LoadData();
         }
 
         private void buttonTakeProductionInWork_Click(object sender, EventArgs e)
@@ -89,7 +79,10 @@ namespace AbstractMotorFactoryView
                 int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
                 try
                 {
-                    service.TakeOrderInWork(new ProductionBindingModel { Id = id });
+                    APIClient.PostRequest<ProductionBindingModel, bool>("api/Core/TakeOrderInWork", new ProductionBindingModel
+                    {
+                        Id = id
+                    });
                     LoadData();
                 }
                 catch (Exception ex)
@@ -106,7 +99,10 @@ namespace AbstractMotorFactoryView
                 int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
                 try
                 {
-                    service.FinishOrder(new ProductionBindingModel { Id = id });
+                    APIClient.PostRequest<ProductionBindingModel, bool>("api/Core/FinishOrder", new ProductionBindingModel
+                    {
+                        Id = id
+                    });
                     LoadData();
                 }
                 catch (Exception ex)
@@ -123,7 +119,10 @@ namespace AbstractMotorFactoryView
                 int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
                 try
                 {
-                    service.PayOrder(new ProductionBindingModel { Id = id });
+                    APIClient.PostRequest<ProductionBindingModel, bool>("api/Core/PayOrder", new ProductionBindingModel
+                    {
+                        Id = id
+                    });
                     LoadData();
                 }
                 catch (Exception ex)
@@ -148,7 +147,7 @@ namespace AbstractMotorFactoryView
             {
                 try
                 {
-                    reportService.SaveProductPrice(new ReportBindingModel
+                    APIClient.PostRequest<ReportBindingModel, bool>("api/Report/SaveProductPrice", new ReportBindingModel
                     {
                         FileName = sfd.FileName
                     });
@@ -163,13 +162,13 @@ namespace AbstractMotorFactoryView
 
         private void загруженностьСкладовToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormStorageLoad>();
+            var form = new FormStorageLoad();
             form.ShowDialog();
         }
 
         private void заказыКлиентовToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormCustomerProductions>();
+            var form = new FormCustomerProductions();
             form.ShowDialog();
         }
     }

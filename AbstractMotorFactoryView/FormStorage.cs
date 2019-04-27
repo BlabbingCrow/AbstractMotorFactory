@@ -3,25 +3,18 @@ using AbstractMotorFactoryServiceDAL.Interfaces;
 using AbstractMotorFactoryServiceDAL.ViewModels;
 using System;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractMotorFactoryView
 {
     public partial class FormStorage : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
         public int Id { set { id = value; } }
-
-        private readonly IStorageService service;
 
         private int? id;
 
-        public FormStorage(IStorageService service)
+        public FormStorage()
         {
             InitializeComponent();
-            this.service = service;
         }
 
         private void FormStorage_Load(object sender, EventArgs e)
@@ -30,7 +23,7 @@ namespace AbstractMotorFactoryView
             {
                 try
                 {
-                    StorageViewModel view = service.GetElement(id.Value);
+                    StorageViewModel view = APIClient.GetRequest<StorageViewModel>("api/Storage/Get/" + id.Value);
                     if (view != null)
                     {
                         textBox1.Text = view.StorageName;
@@ -58,7 +51,7 @@ namespace AbstractMotorFactoryView
             {
                 if (id.HasValue)
                 {
-                    service.UpdElement(new StorageBindingModel
+                    APIClient.PostRequest<StorageBindingModel, bool>("api/Storage/UpdElement", new StorageBindingModel
                     {
                         Id = id.Value,
                         StorageName = textBox1.Text
@@ -66,7 +59,7 @@ namespace AbstractMotorFactoryView
                 }
                 else
                 {
-                    service.AddElement(new StorageBindingModel
+                    APIClient.PostRequest<StorageBindingModel, bool>("api/Storage/AddElement", new StorageBindingModel
                     {
                         StorageName = textBox1.Text
                     });
