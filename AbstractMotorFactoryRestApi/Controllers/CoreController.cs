@@ -5,6 +5,7 @@ using AbstractMotorFactoryServiceDAL.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace AbstractMotorFactoryRestApi.Controllers
 {
@@ -59,6 +60,7 @@ namespace AbstractMotorFactoryRestApi.Controllers
                 if (impl == null)
                 {
                     throw new Exception("Нет сотрудников");
+
                 }
                 new WorkImplementer(_service, _serviceImplementer, impl.Id, order.Id);
             }

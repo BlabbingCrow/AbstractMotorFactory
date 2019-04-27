@@ -27,6 +27,7 @@ namespace AbstractMotorFactoryServiceDAL.ViewModels
         public int? ImplementerId { get; set; }
 
         [DataMember]
+        [DisplayName("Исполнитель")]
         public string ImplementerName { get; set; }
 
         [DataMember]

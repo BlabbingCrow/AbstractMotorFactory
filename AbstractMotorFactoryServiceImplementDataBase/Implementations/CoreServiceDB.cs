@@ -24,6 +24,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
                 Id = rec.Id,
                 CustomerId = rec.CustomerId,
                 EngineId = rec.EngineId,
+                ImplementerId = rec.ImplementerId,
                 TimeCreate = SqlFunctions.DateName("dd", rec.TimeCreate) + " " +
                 SqlFunctions.DateName("mm", rec.TimeCreate) + " " +
                 SqlFunctions.DateName("yyyy", rec.TimeCreate),
@@ -35,7 +36,8 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
                 Number = rec.Number,
                 Amount = rec.Amount,
                 CustomerFIO = rec.Customer.CustomerFIO,
-                EngineName = rec.Engine.EngineName
+                EngineName = rec.Engine.EngineName,
+                ImplementerName = rec.Implementer.ImplementerFIO
             })
             .ToList();
             return result;
@@ -107,12 +109,12 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
                         }
                         if (NumberOnStocks > 0)
                         {
-                            throw new Exception("Не достаточно компонента " +
-                           productComponent.Detail.DetailName + " требуется " + productComponent.Number + ", нехватает " + NumberOnStocks);
-                         }
+                            throw new Exception("Не достаточно компонента " + productComponent.Detail.DetailName + " требуется " + productComponent.Number + ", нехватает " + NumberOnStocks);
+                        }
                     }
                     element.TimeImplement = DateTime.Now;
                     element.State = ProductionStatus.Выполняется;
+                    element.ImplementerId = model.ImplementerId;
                     context.SaveChanges();
                     transaction.Commit();
                 }

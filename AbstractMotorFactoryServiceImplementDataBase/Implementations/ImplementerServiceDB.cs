@@ -31,8 +31,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
 
         public ImplementerViewModel GetElement(int id)
         {
-            Implementer element = context.Implementers.FirstOrDefault(rec => rec.Id ==
-           id);
+            Implementer element = context.Implementers.FirstOrDefault(rec => rec.Id == id);
             if (element != null)
             {
                 return new ImplementerViewModel
@@ -101,6 +100,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
             })
             .OrderBy(x => x.Count)
             .FirstOrDefault();
+
             if (ordersWorker != null)
             {
                 return GetElement(ordersWorker.ImplId);

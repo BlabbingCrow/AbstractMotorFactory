@@ -86,13 +86,9 @@
     <Compile Include="Implementations\ImplementerServiceDB.cs" />
     <Compile Include="Implementations\ReportServiceDB.cs" />
     <Compile Include="Implementations\StorageServiceDB.cs" />
-    <Compile Include="Migrations\201903300824423_FirstMigration.cs" />
-    <Compile Include="Migrations\201903300824423_FirstMigration.Designer.cs">
-      <DependentUpon>201903300824423_FirstMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904261758507_FirstMigration1.cs" />
-    <Compile Include="Migrations\201904261758507_FirstMigration1.Designer.cs">
-      <DependentUpon>201904261758507_FirstMigration1.cs</DependentUpon>
+    <Compile Include="Migrations\201904270834362_FirstMigration.cs" />
+    <Compile Include="Migrations\201904270834362_FirstMigration.Designer.cs">
+      <DependentUpon>201904270834362_FirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -118,11 +114,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201903300824423_FirstMigration.resx">
-      <DependentUpon>201903300824423_FirstMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904261758507_FirstMigration1.resx">
-      <DependentUpon>201904261758507_FirstMigration1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201904270834362_FirstMigration.resx">
+      <DependentUpon>201904270834362_FirstMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

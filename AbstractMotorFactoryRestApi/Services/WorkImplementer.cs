@@ -13,7 +13,9 @@ namespace AbstractMotorFactoryRestApi.Services
         private readonly int _orderId;
         
         static Semaphore _sem = new Semaphore(3, 3);
+
         Thread myThread;
+
         public WorkImplementer(ICoreService service, IImplementerService serviceImplementer, int implementerId, int orderId)
         {
             _service = service;
@@ -35,6 +37,7 @@ namespace AbstractMotorFactoryRestApi.Services
             myThread = new Thread(Work);
             myThread.Start();
         }
+
         public void Work()
         {
             try
