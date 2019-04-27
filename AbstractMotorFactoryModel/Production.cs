@@ -10,6 +10,8 @@ namespace AbstractMotorFactoryModel
 
         public int EngineId { get; set; }
 
+        public int? ImplementerId { get; set; }
+
         public int Number { get; set; }
 
         public decimal Amount { get; set; }
@@ -23,5 +25,7 @@ namespace AbstractMotorFactoryModel
         public virtual Customer Customer { get; set; }
 
         public virtual Engine Engine { get; set; }
+
+        public virtual Implementer Implementer { get; set; }
     }
 }

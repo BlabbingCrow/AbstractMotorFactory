@@ -15,6 +15,9 @@ namespace AbstractMotorFactoryServiceDAL.BindingModels
         public int EngineId { get; set; }
 
         [DataMember]
+        public int? ImplementerId { get; set; }
+
+        [DataMember]
         public int Number { get; set; }
 
         [DataMember]

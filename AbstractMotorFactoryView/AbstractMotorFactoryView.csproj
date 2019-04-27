@@ -94,11 +94,23 @@
     <Compile Include="FormCreateProduction.Designer.cs">
       <DependentUpon>FormCreateProduction.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormImplementer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormImplementer.Designer.cs">
+      <DependentUpon>FormImplementer.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormCustomerProductions.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormCustomerProductions.Designer.cs">
       <DependentUpon>FormCustomerProductions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormImplementers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormImplementers.Designer.cs">
+      <DependentUpon>FormImplementers.cs</DependentUpon>
     </Compile>
     <Compile Include="FormStorageLoad.cs">
       <SubType>Form</SubType>
@@ -178,8 +190,14 @@
     <EmbeddedResource Include="FormCreateProduction.resx">
       <DependentUpon>FormCreateProduction.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormImplementer.resx">
+      <DependentUpon>FormImplementer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormCustomerProductions.resx">
       <DependentUpon>FormCustomerProductions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormImplementers.resx">
+      <DependentUpon>FormImplementers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStorageLoad.resx">
       <DependentUpon>FormStorageLoad.cs</DependentUpon>

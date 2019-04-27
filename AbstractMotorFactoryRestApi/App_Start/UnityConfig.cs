@@ -53,6 +53,7 @@ namespace AbstractMotorFactoryRestApi
             container.RegisterType<IStorageService, StorageServiceDB>(new HierarchicalLifetimeManager());
             container.RegisterType<ICoreService, CoreServiceDB>(new HierarchicalLifetimeManager());
             container.RegisterType<IReportService, ReportServiceDB>(new HierarchicalLifetimeManager());
+            container.RegisterType<IImplementerService, ImplementerServiceDB>(new HierarchicalLifetimeManager());
         }
     }
 }

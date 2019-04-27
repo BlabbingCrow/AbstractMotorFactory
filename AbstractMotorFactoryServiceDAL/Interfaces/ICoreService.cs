@@ -8,6 +8,8 @@ namespace AbstractMotorFactoryServiceDAL.Interfaces
     {
         List<ProductionViewModel> GetList();
 
+        List<ProductionViewModel> GetFreeOrders();
+
         void CreateOrder(ProductionBindingModel model);
 
         void TakeOrderInWork(ProductionBindingModel model);

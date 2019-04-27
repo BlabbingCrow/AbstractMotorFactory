@@ -14,6 +14,8 @@ namespace AbstractMotorFactoryServiceImplementDataBase
 
         public virtual DbSet<Customer> Customers { get; set; }
 
+        public virtual DbSet<Implementer> Implementers { get; set; }
+
         public virtual DbSet<Detail> Details { get; set; }
 
         public virtual DbSet<Production> Productions { get; set; }
