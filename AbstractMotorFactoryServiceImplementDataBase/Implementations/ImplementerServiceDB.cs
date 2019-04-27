@@ -28,6 +28,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
             .ToList();
             return result;
         }
+
         public ImplementerViewModel GetElement(int id)
         {
             Implementer element = context.Implementers.FirstOrDefault(rec => rec.Id ==
@@ -42,6 +43,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
             }
             throw new Exception("Элемент не найден");
         }
+
         public void AddElement(ImplementerBindingModel model)
         {
             Implementer element = context.Implementers.FirstOrDefault(rec =>
@@ -56,6 +58,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
             });
             context.SaveChanges();
         }
+
         public void UpdElement(ImplementerBindingModel model)
         {
             Implementer element = context.Implementers.FirstOrDefault(rec =>
@@ -73,6 +76,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
             element.ImplementerFIO = model.ImplementerFIO;
             context.SaveChanges();
         }
+
         public void DelElement(int id)
         {
             Implementer element = context.Implementers.FirstOrDefault(rec => rec.Id == id);
@@ -86,6 +90,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
                 throw new Exception("Элемент не найден");
             }
         }
+
         public ImplementerViewModel GetFreeWorker()
         {
             var ordersWorker = context.Implementers
