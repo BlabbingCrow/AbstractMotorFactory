@@ -13,10 +13,12 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
     public class CoreServiceDB : ICoreService
     {
         private AbstractDbContext context;
+
         public CoreServiceDB(AbstractDbContext context)
         {
             this.context = context;
         }
+
         public List<ProductionViewModel> GetList()
         {
             List<ProductionViewModel> result = context.Productions.Select(rec => new ProductionViewModel
