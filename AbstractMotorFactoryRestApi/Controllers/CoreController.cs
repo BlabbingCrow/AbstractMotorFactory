@@ -32,6 +32,18 @@ namespace AbstractMotorFactoryRestApi.Controllers
             return Ok(list);
         }
 
+        [HttpGet]
+        public IHttpActionResult GetInfo()
+        {
+            ReflectionService service = new ReflectionService();
+            var list = service.GetInfoByAssembly();
+            if (list == null)
+            {
+                InternalServerError(new Exception("Нет данных"));
+            }
+            return Ok(list);
+        }
+
         [HttpPost]
         public void CreateOrder(ProductionBindingModel model)
         {
@@ -64,6 +76,6 @@ namespace AbstractMotorFactoryRestApi.Controllers
                 }
                 new WorkImplementer(_service, _serviceImplementer, impl.Id, order.Id);
             }
-        }
+        }
     }
 }
