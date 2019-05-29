@@ -37,6 +37,18 @@ namespace AbstractMotorFactoryServiceImplementList.Implementations
             return result;
         }
 
+        public List<ProductionViewModel> GetFreeOrders()
+        {
+            List<ProductionViewModel> result = source.Productions
+            .Where(x => x.State == ProductionStatus.Принят || x.State == ProductionStatus.НедостаточноРесурсов)
+            .Select(rec => new ProductionViewModel
+            {
+                Id = rec.Id
+            })
+            .ToList();
+            return result;
+        }
+
         public void CreateOrder(ProductionBindingModel model)
         {
             int maxId = source.Productions.Count > 0 ? source.Productions.Max(rec => rec.Id) : 0;
@@ -145,6 +157,6 @@ namespace AbstractMotorFactoryServiceImplementList.Implementations
                     Number = model.Number
                 });
             }
-        }
+        }
     }
 }

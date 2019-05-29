@@ -52,8 +52,6 @@ namespace AbstractMotorFactoryView
                     int id = Convert.ToInt32(comboBoxEngine.SelectedValue);
                     EngineViewModel engine = APIClient.GetRequest<EngineViewModel>("api/Engine/Get/" + id);
                     int count = Convert.ToInt32(textBoxNumber.Text);
-                    Console.WriteLine(Convert.ToInt32(engine.Cost));
-                    Console.WriteLine(Convert.ToInt32(textBoxNumber.Text));
                     textBoxSum.Text = (count * engine.Cost).ToString();
                 }
                 catch (Exception ex)

@@ -24,6 +24,13 @@ namespace AbstractMotorFactoryServiceDAL.ViewModels
         public string EngineName { get; set; }
 
         [DataMember]
+        public int? ImplementerId { get; set; }
+
+        [DataMember]
+        [DisplayName("Исполнитель")]
+        public string ImplementerName { get; set; }
+
+        [DataMember]
         [DisplayName("Количество")]
         public int Number { get; set; }
 

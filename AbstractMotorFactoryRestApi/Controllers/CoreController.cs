@@ -1,7 +1,11 @@
-﻿using AbstractMotorFactoryServiceDAL.BindingModels;
+﻿using AbstractMotorFactoryRestApi.Services;
+using AbstractMotorFactoryServiceDAL.BindingModels;
 using AbstractMotorFactoryServiceDAL.Interfaces;
+using AbstractMotorFactoryServiceDAL.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace AbstractMotorFactoryRestApi.Controllers
 {
@@ -9,9 +13,12 @@ namespace AbstractMotorFactoryRestApi.Controllers
     {
         private readonly ICoreService _service;
 
-        public CoreController(ICoreService service)
+        private readonly IImplementerService _serviceImplementer;
+
+        public CoreController(ICoreService service, IImplementerService serviceImplementer)
         {
             _service = service;
+            _serviceImplementer = serviceImplementer;
         }
 
         [HttpGet]
@@ -32,18 +39,6 @@ namespace AbstractMotorFactoryRestApi.Controllers
         }
 
         [HttpPost]
-        public void TakeOrderInWork(ProductionBindingModel model)
-        {
-            _service.TakeOrderInWork(model);
-        }
-
-        [HttpPost]
-        public void FinishOrder(ProductionBindingModel model)
-        {
-            _service.FinishOrder(model);
-        }
-
-        [HttpPost]
         public void PayOrder(ProductionBindingModel model)
         {
             _service.PayOrder(model);
@@ -54,5 +49,21 @@ namespace AbstractMotorFactoryRestApi.Controllers
         {
             _service.PutDetailOnStorage(model);
         }
+
+        [HttpPost]
+        public void StartWork()
+        {
+            List<ProductionViewModel> orders = _service.GetFreeOrders();
+            foreach (var order in orders)
+            {
+                ImplementerViewModel impl = _serviceImplementer.GetFreeWorker();
+                if (impl == null)
+                {
+                    throw new Exception("Нет сотрудников");
+
+                }
+                new WorkImplementer(_service, _serviceImplementer, impl.Id, order.Id);
+            }
+        }
     }
 }

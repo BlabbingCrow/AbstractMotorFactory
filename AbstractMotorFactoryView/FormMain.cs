@@ -59,6 +59,12 @@ namespace AbstractMotorFactoryView
             form.ShowDialog();
         }
 
+        private void сотрудникиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new FormImplementers();
+            form.ShowDialog();
+        }
+
         private void пополнитьСкладToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = new FormPutOnStorage();
@@ -70,46 +76,6 @@ namespace AbstractMotorFactoryView
             var form = new FormCreateProduction();
             form.ShowDialog();
             LoadData();
-        }
-
-        private void buttonTakeProductionInWork_Click(object sender, EventArgs e)
-        {
-            if (dataGridView1.SelectedRows.Count == 1)
-            {
-                int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
-                try
-                {
-                    APIClient.PostRequest<ProductionBindingModel, bool>("api/Core/TakeOrderInWork", new ProductionBindingModel
-                    {
-                        Id = id
-                    });
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void buttonProductionReady_Click(object sender, EventArgs e)
-        {
-            if (dataGridView1.SelectedRows.Count == 1)
-            {
-                int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
-                try
-                {
-                    APIClient.PostRequest<ProductionBindingModel, bool>("api/Core/FinishOrder", new ProductionBindingModel
-                    {
-                        Id = id
-                    });
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
         }
 
         private void buttonPayProduction_Click(object sender, EventArgs e)
@@ -170,6 +136,19 @@ namespace AbstractMotorFactoryView
         {
             var form = new FormCustomerProductions();
             form.ShowDialog();
+        }
+
+        private void запускРаботToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                APIClient.PostRequest<int?, bool>("api/Core/StartWork", null);
+                MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

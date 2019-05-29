@@ -46,6 +46,7 @@
     <Compile Include="BindingModels\DetailBindingModel.cs" />
     <Compile Include="BindingModels\EngineBindingModel.cs" />
     <Compile Include="BindingModels\EngineDetailBindingModel.cs" />
+    <Compile Include="BindingModels\ImplementerBindingModel.cs" />
     <Compile Include="BindingModels\ProductionBindingModel.cs" />
     <Compile Include="BindingModels\ReportBindingModel.cs" />
     <Compile Include="BindingModels\StorageBindingModel.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Interfaces\ICustomerService.cs" />
     <Compile Include="Interfaces\IDetailService.cs" />
     <Compile Include="Interfaces\IEngineService.cs" />
+    <Compile Include="Interfaces\IImplementerService.cs" />
     <Compile Include="Interfaces\IReportService.cs" />
     <Compile Include="Interfaces\IStorageService.cs" />
     <Compile Include="ViewModels\CustomerProductionsViewModel.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="ViewModels\DetailViewModel.cs" />
     <Compile Include="ViewModels\EngineDetailViewModel.cs" />
     <Compile Include="ViewModels\EngineViewModel.cs" />
+    <Compile Include="ViewModels\ImplementerViewModel.cs" />
     <Compile Include="ViewModels\ProductionViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\StorageDetailViewModel.cs" />
