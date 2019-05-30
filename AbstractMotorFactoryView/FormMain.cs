@@ -135,7 +135,7 @@ namespace AbstractMotorFactoryView
         private void заказыКлиентовToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = new FormCustomerProductions();
-            form.ShowDialog();
+            form.ShowDialog();
         }
 
         private void запускРаботToolStripMenuItem_Click(object sender, EventArgs e)
@@ -149,6 +149,12 @@ namespace AbstractMotorFactoryView
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void письмаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new FormMails();
+            form.ShowDialog();
         }
     }
 }

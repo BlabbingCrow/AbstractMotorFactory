@@ -53,6 +53,7 @@
     <Compile Include="Engine.cs" />
     <Compile Include="EngineDetail.cs" />
     <Compile Include="Implementer.cs" />
+    <Compile Include="MessageInfo.cs" />
     <Compile Include="Production.cs" />
     <Compile Include="ProductionStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
