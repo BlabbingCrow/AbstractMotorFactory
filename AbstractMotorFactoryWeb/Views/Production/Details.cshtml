@@ -1,0 +1,66 @@
+﻿@model AbstractMotorFactoryModel.Production
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Production</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EngineId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EngineId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Numder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Numder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeCreate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeCreate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeImplement)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeImplement)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

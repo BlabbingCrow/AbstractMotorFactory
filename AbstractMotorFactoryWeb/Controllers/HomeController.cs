@@ -13,18 +13,24 @@ namespace AbstractMotorFactoryWeb.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Customers()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            return RedirectToAction("Index", "Customer");
         }
 
-        public ActionResult Contact()
+        public ActionResult Details()
         {
-            ViewBag.Message = "Your contact page.";
+            return RedirectToAction("Index", "Detail");
+        }
 
-            return View();
+        public ActionResult Engines()
+        {
+            return RedirectToAction("Index", "Engine");
+        }
+
+        public ActionResult Productions()
+        {
+            return RedirectToAction("Index", "Production");
         }
     }
 }

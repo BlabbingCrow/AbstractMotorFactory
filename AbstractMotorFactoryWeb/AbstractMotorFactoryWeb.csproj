@@ -147,10 +147,15 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\DetailController.cs" />
+    <Compile Include="Controllers\EngineController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Globals.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +194,24 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Production\Create.cshtml" />
+    <Content Include="Views\Production\Delete.cshtml" />
+    <Content Include="Views\Production\Details.cshtml" />
+    <Content Include="Views\Production\Edit.cshtml" />
+    <Content Include="Views\Production\Index.cshtml" />
+    <Content Include="Views\Customer\Create.cshtml" />
+    <Content Include="Views\Customer\Delete.cshtml" />
+    <Content Include="Views\Customer\Edit.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Detail\Create.cshtml" />
+    <Content Include="Views\Detail\Delete.cshtml" />
+    <Content Include="Views\Detail\Edit.cshtml" />
+    <Content Include="Views\Detail\Index.cshtml" />
+    <Content Include="Views\Engine\Delete.cshtml" />
+    <Content Include="Views\Engine\Edit.cshtml" />
+    <Content Include="Views\Engine\Create.cshtml" />
+    <Content Include="Views\Engine\Index.cshtml" />
+    <Content Include="Views\Engine\CreateEngine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -208,6 +231,14 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AbstractMotorFactoryModel\AbstractMotorFactoryModel.csproj">
+      <Project>{53ed09be-8053-4b6f-8364-a78981905997}</Project>
+      <Name>AbstractMotorFactoryModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AbstractMotorFactoryServiceDAL\AbstractMotorFactoryServiceDAL.csproj">
+      <Project>{a43b68a4-fe53-4be6-895e-d6e54c1c6d2f}</Project>
+      <Name>AbstractMotorFactoryServiceDAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AbstractMotorFactoryServiceImplementList\AbstractMotorFactoryServiceImplementList.csproj">
       <Project>{dea4b232-29e8-4df5-860d-bf8055ee7bd5}</Project>
       <Name>AbstractMotorFactoryServiceImplementList</Name>
