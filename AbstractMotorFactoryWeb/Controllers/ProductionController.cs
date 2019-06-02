@@ -23,8 +23,8 @@ namespace AbstractMotorFactoryWeb.Controllers
         {
             var engines = new SelectList(fabricService.GetList(), "Id", "EngineName");
             var customers = new SelectList(customerService.GetList(), "Id", "CustomerFIO");
-            ViewBag.Engines = engines;
-            ViewBag.Customers = customers;
+            ViewBag.Engine = engines;
+            ViewBag.Customer = customers;
             return View();
         }
 

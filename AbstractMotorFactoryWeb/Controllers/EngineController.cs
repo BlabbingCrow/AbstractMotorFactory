@@ -25,6 +25,18 @@ namespace AbstractMotorFactoryWeb.Controllers
 
         public ActionResult Index()
         {
+            return View(service.GetList());
+        }
+
+        public ActionResult Create()
+        {
+            var ingredients = new SelectList(ingredientService.GetList(), "Id", "DetailName");
+            ViewBag.Detail = ingredients;
+            return View();
+        }
+
+        public ActionResult CreateEngine()
+        {
             if (Session["Engine"] == null)
             {
                 var engine = new EngineViewModel();
@@ -34,15 +46,8 @@ namespace AbstractMotorFactoryWeb.Controllers
             return View((EngineViewModel)Session["Engine"]);
         }
 
-        public ActionResult Create()
-        {
-            var ingredients = new SelectList(ingredientService.GetList(), "Id", "DetailName");
-            ViewBag.Stockings = ingredients;
-            return View();
-        }
-
         [HttpPost]
-        public ActionResult CreateEnginePost()
+        public ActionResult CreateDetailPost()
         {
             var engine = (EngineViewModel)Session["Engine"];
             var ingredient = new EngineDetailViewModel
@@ -53,22 +58,22 @@ namespace AbstractMotorFactoryWeb.Controllers
             };
             engine.EngineDetails.Add(ingredient);
             Session["Engine"] = engine;
-            return RedirectToAction("Index");
+            return RedirectToAction("CreateEngine");
         }
 
         [HttpPost]
-        public ActionResult CreateDetailPost()
+        public ActionResult CreateEnginePost()
         {
-            var fabric = (EngineViewModel)Session["Engine"];
+            var engine = (EngineViewModel)Session["Engine"];
             var engineDetails = new List<EngineDetailBindingModel>();
-            for (int i = 0; i < fabric.EngineDetails.Count; ++i)
+            for (int i = 0; i < engine.EngineDetails.Count; ++i)
             {
                 engineDetails.Add(new EngineDetailBindingModel
                 {
-                    Id = fabric.EngineDetails[i].Id,
-                    EngineId = fabric.EngineDetails[i].EngineId,
-                    DetailId = fabric.EngineDetails[i].DetailId,
-                    Number = fabric.EngineDetails[i].Number
+                    Id = engine.EngineDetails[i].Id,
+                    EngineId = engine.EngineDetails[i].EngineId,
+                    DetailId = engine.EngineDetails[i].DetailId,
+                    Number = engine.EngineDetails[i].Number
                 });
             }
             service.AddElement(new EngineBindingModel
@@ -78,7 +83,7 @@ namespace AbstractMotorFactoryWeb.Controllers
                 EngineDetails = engineDetails
             });
             Session.Remove("Engine");
-            return RedirectToAction("Index", "Engines");
+            return RedirectToAction("Index");
         }
     }
 }

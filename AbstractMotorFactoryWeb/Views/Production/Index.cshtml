@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AbstractMotorFactoryModel.Production>
+﻿@model IEnumerable<AbstractMotorFactoryServiceDAL.ViewModels.ProductionViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -12,16 +12,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CustomerId)
+            @Html.DisplayNameFor(model => model.CustomerFIO)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EngineId)
+            @Html.DisplayNameFor(model => model.EngineName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Numder)
+            @Html.DisplayNameFor(model => model.Number)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.TimeCreate)
@@ -35,16 +38,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CustomerId)
+            @Html.DisplayFor(modelItem => item.CustomerFIO)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EngineId)
+            @Html.DisplayFor(modelItem => item.EngineName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Numder)
+            @Html.DisplayFor(modelItem => item.Number)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.State)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TimeCreate)
@@ -53,9 +59,9 @@
             @Html.DisplayFor(modelItem => item.TimeImplement)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Отдать на выполнение", "SetStatus", new { id = item.Id, status = "Processing" }) |
+            @Html.ActionLink("Заказ готов", "SetStatus", new { id = item.Id, status = "Ready" }) |
+            @Html.ActionLink("Заказ оплачен", "SetStatus", new { id = item.Id, status = "Paid" })
         </td>
     </tr>
 }
