@@ -202,10 +202,10 @@
     <Content Include="Views\Detail\Create.cshtml" />
     <Content Include="Views\Detail\Edit.cshtml" />
     <Content Include="Views\Detail\Index.cshtml" />
-    <Content Include="Views\Engine\Edit.cshtml" />
-    <Content Include="Views\Engine\Create.cshtml" />
     <Content Include="Views\Engine\Index.cshtml" />
-    <Content Include="Views\Engine\CreateEngine.cshtml" />
+    <Content Include="Views\Engine\Create.cshtml" />
+    <Content Include="Views\Engine\AddDetail.cshtml" />
+    <Content Include="Views\Engine\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
