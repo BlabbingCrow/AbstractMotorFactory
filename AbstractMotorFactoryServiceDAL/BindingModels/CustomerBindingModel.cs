@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace AbstractMotorFactoryServiceDAL.BindingModels
 {
     public class CustomerBindingModel
