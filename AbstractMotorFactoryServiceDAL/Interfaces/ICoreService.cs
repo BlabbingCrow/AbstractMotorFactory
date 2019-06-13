@@ -15,5 +15,7 @@ namespace AbstractMotorFactoryServiceDAL.Interfaces
         void FinishOrder(ProductionBindingModel model);
 
         void PayOrder(ProductionBindingModel model);
+
+        void PutDetailOnStorage(StorageDetailBindingModel model);
     }
 }

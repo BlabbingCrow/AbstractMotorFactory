@@ -1,10 +1,10 @@
-namespace AbstractMotorFactoryModel
+﻿namespace AbstractMotorFactoryModel
 {
-    public class EngineDetail
+    public class StorageDetail
     {
         public int Id { get; set; }
 
-        public int EngineId { get; set; }
+        public int StorageId { get; set; }
 
         public int DetailId { get; set; }
 
