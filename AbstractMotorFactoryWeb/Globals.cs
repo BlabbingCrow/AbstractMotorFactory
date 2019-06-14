@@ -1,19 +1,21 @@
 ﻿using AbstractMotorFactoryServiceDAL.Interfaces;
-using AbstractMotorFactoryServiceImplementList.Implementations;
+using AbstractMotorFactoryServiceImplementDataBase;
+using AbstractMotorFactoryServiceImplementDataBase.Implementations;
 
 namespace AbstractMotorFactoryWeb
 {
     public static class Globals
     {
+        public static AbstractDbContext DbContext { get; } = new AbstractDbContext();
 
-        public static ICustomerService CustomerService { get; } = new CustomerServiceList();
+        public static ICustomerService CustomerService { get; } = new CustomerServiceDB(DbContext);
 
-        public static IDetailService DetailService { get; } = new DetailServiceList();
+        public static IDetailService DetailService { get; } = new DetailServiceDB(DbContext);
 
-        public static IEngineService EngineService { get; } = new EngineServiceList();
+        public static IEngineService EngineService { get; } = new EngineServiceDB(DbContext);
 
-        public static ICoreService CoreService { get; } = new CoreServiceList();
+        public static ICoreService CoreService { get; } = new CoreServiceDB(DbContext);
 
-        public static IStorageService StorageService { get; } = new StorageServiceList();
+        public static IStorageService StorageService { get; } = new StorageServiceDB(DbContext);
     }
 }
