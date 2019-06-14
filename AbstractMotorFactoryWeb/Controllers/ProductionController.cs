@@ -8,20 +8,18 @@ namespace AbstractMotorFactoryWeb.Controllers
 {
     public class ProductionController : Controller
     {
-        private IEngineService fabricService = Globals.EngineService;
-
-        private ICoreService mainService = Globals.CoreService;
-
+        private IEngineService engineService = Globals.EngineService;
+        private ICoreService coreService = Globals.CoreService;
         private ICustomerService customerService = Globals.CustomerService;
 
         public ActionResult Index()
         {
-            return View(mainService.GetList());
+            return View(coreService.GetList());
         }
 
         public ActionResult Create()
         {
-            var engines = new SelectList(fabricService.GetList(), "Id", "EngineName");
+            var engines = new SelectList(engineService.GetList(), "Id", "EngineName");
             var customers = new SelectList(customerService.GetList(), "Id", "CustomerFIO");
             ViewBag.Engine = engines;
             ViewBag.Customer = customers;
@@ -36,7 +34,7 @@ namespace AbstractMotorFactoryWeb.Controllers
             var number = int.Parse(Request["Number"]);
             var amount = CalcSum(engineId, number);
 
-            mainService.CreateOrder(new ProductionBindingModel
+            coreService.CreateOrder(new ProductionBindingModel
             {
                 EngineId = engineId,
                 CustomerId = customerId,
@@ -48,7 +46,7 @@ namespace AbstractMotorFactoryWeb.Controllers
 
         private Decimal CalcSum(int engineId, int engineCount)
         {
-            EngineViewModel engine = fabricService.GetElement(engineId);
+            EngineViewModel engine = engineService.GetElement(engineId);
             return engineCount * engine.Cost;
         }
 
@@ -59,13 +57,13 @@ namespace AbstractMotorFactoryWeb.Controllers
                 switch (status)
                 {
                     case "Processing":
-                        mainService.TakeOrderInWork(new ProductionBindingModel { Id = id });
+                        coreService.TakeOrderInWork(new ProductionBindingModel { Id = id });
                         break;
                     case "Ready":
-                        mainService.FinishOrder(new ProductionBindingModel { Id = id });
+                        coreService.FinishOrder(new ProductionBindingModel { Id = id });
                         break;
                     case "Paid":
-                        mainService.PayOrder(new ProductionBindingModel { Id = id });
+                        coreService.PayOrder(new ProductionBindingModel { Id = id });
                         break;
                 }
             }

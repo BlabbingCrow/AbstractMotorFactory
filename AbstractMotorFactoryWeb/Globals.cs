@@ -14,5 +14,6 @@ namespace AbstractMotorFactoryWeb
 
         public static ICoreService CoreService { get; } = new CoreServiceList();
 
+        public static IStorageService StorageService { get; } = new StorageServiceList();
     }
 }

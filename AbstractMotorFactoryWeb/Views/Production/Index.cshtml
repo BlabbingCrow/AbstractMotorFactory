@@ -5,6 +5,9 @@
 }
 
 <h2>Список заказов</h2>
+@Html.ValidationSummary(false)
+<p>@ViewBag.ErrorMessage</p>
+
 
 <p>
     @Html.ActionLink("Добавить", "Create")
@@ -35,35 +38,36 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CustomerFIO)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EngineName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Number)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.State)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TimeCreate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TimeImplement)
-        </td>
-        <td>
-            @Html.ActionLink("Отдать на выполнение", "SetStatus", new { id = item.Id, status = "Processing" }) |
-            @Html.ActionLink("Заказ готов", "SetStatus", new { id = item.Id, status = "Ready" }) |
-            @Html.ActionLink("Заказ оплачен", "SetStatus", new { id = item.Id, status = "Paid" })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerFIO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EngineName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeCreate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeImplement)
+            </td>
+            <td>
+                @Html.ActionLink("Отдать на выполнение", "SetStatus", new { id = item.Id, status = "Processing" }) |
+                @Html.ActionLink("Заказ готов", "SetStatus", new { id = item.Id, status = "Ready" }) |
+                @Html.ActionLink("Заказ оплачен", "SetStatus", new { id = item.Id, status = "Paid" })
+            </td>
+        </tr>
+    }
 
 </table>

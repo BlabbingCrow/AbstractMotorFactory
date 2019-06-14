@@ -24,6 +24,8 @@
                     <li>@Html.ActionLink("Клиенты", "Index", "Customer")</li>
                     <li>@Html.ActionLink("Двигатели", "Index", "Engine")</li>
                     <li>@Html.ActionLink("Детали", "Index", "Detail")</li>
+                    <li>@Html.ActionLink("Склады", "Index", "Storage")</li>
+                    <li>@Html.ActionLink("Пополнить склад", "PutDetailOnStorage", "Storage")</li>
                 </ul>
             </div>
         </div>
@@ -31,9 +33,6 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
-        </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
