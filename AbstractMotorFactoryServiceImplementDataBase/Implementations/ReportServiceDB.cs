@@ -33,8 +33,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
                 object missing = System.Reflection.Missing.Value;
                 //создаем документ
                 Microsoft.Office.Interop.Word.Document document =
-                winword.Documents.Add(ref missing, ref missing, ref missing, ref
-               missing);
+                winword.Documents.Add(ref missing, ref missing, ref missing, ref missing);
                 //получаем ссылку на параграф
                 var paragraph = document.Paragraphs.Add(missing);
                 var range = paragraph.Range;
@@ -57,8 +56,7 @@ namespace AbstractMotorFactoryServiceImplementDataBase.Implementations
                 //создаем таблицу
                 var paragraphTable = document.Paragraphs.Add(Type.Missing);
                 var rangeTable = paragraphTable.Range;
-                var table = document.Tables.Add(rangeTable, products.Count, 2, ref
-               missing, ref missing);
+                var table = document.Tables.Add(rangeTable, products.Count, 2, ref missing, ref missing);
                 font = table.Range.Font;
                 font.Size = 14;
                 font.Name = "Times New Roman";

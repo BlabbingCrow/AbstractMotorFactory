@@ -152,6 +152,7 @@
     <Compile Include="Controllers\EngineController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductionController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StorageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -212,6 +213,9 @@
     <Content Include="Views\Storage\Edit.cshtml" />
     <Content Include="Views\Storage\PutDetailOnStorage.cshtml" />
     <Content Include="Views\Storage\Details.cshtml" />
+    <Content Include="Views\Report\SaveProductPrice.cshtml" />
+    <Content Include="Views\Report\SaveStocksLoad.cshtml" />
+    <Content Include="Views\Report\SaveClientOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
