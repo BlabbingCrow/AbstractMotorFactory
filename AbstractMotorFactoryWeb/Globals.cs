@@ -17,5 +17,7 @@ namespace AbstractMotorFactoryWeb
         public static ICoreService CoreService { get; } = new CoreServiceDB(DbContext);
 
         public static IStorageService StorageService { get; } = new StorageServiceDB(DbContext);
+
+        public static IReportService ReportService { get; } = new ReportServiceDB(DbContext);
     }
 }
