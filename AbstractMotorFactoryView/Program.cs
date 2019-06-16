@@ -1,6 +1,8 @@
 ﻿using AbstractMotorFactoryServiceDAL.Interfaces;
-using AbstractMotorFactoryServiceImplementList.Implementations;
+using AbstractMotorFactoryServiceImplementDataBase;
+using AbstractMotorFactoryServiceImplementDataBase.Implementations;
 using System;
+using System.Data.Entity;
 using System.Windows.Forms;
 using Unity;
 using Unity.Lifetime;
@@ -9,9 +11,6 @@ namespace AbstractMotorFactoryView
 {
     static class Program
     {
-        /// <summary>
-        /// Главная точка входа для приложения.
-        /// </summary>
         [STAThread]
         static void Main()
         {
@@ -25,11 +24,12 @@ namespace AbstractMotorFactoryView
         public static IUnityContainer BuildUnityContainer()
         {
             var currentContainer = new UnityContainer();
-            currentContainer.RegisterType<ICustomerService, CustomerServiceList>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IDetailService, DetailServiceList>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IEngineService, EngineServiceList>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<ICoreService, CoreServiceList>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IStorageService, StorageServiceList>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<DbContext, AbstractDbContext>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ICustomerService, CustomerServiceDB>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IDetailService, DetailServiceDB>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IEngineService, EngineServiceDB>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ICoreService, CoreServiceDB>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IStorageService, StorageServiceDB>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
     }

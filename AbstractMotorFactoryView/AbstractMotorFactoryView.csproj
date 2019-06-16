@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -196,6 +202,10 @@
     <ProjectReference Include="..\AbstractMotorFactoryServiceDAL\AbstractMotorFactoryServiceDAL.csproj">
       <Project>{a43b68a4-fe53-4be6-895e-d6e54c1c6d2f}</Project>
       <Name>AbstractMotorFactoryServiceDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AbstractMotorFactoryServiceImplementDataBase\AbstractMotorFactoryServiceImplementDataBase.csproj">
+      <Project>{c2233cf1-ec86-4dee-980e-ad66c96f8388}</Project>
+      <Name>AbstractMotorFactoryServiceImplementDataBase</Name>
     </ProjectReference>
     <ProjectReference Include="..\AbstractMotorFactoryServiceImplementList\AbstractMotorFactoryServiceImplementList.csproj">
       <Project>{dea4b232-29e8-4df5-860d-bf8055ee7bd5}</Project>
