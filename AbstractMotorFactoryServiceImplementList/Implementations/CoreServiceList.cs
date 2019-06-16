@@ -46,7 +46,7 @@ namespace AbstractMotorFactoryServiceImplementList.Implementations
                     CustomerFIO = customerFIO,
                     EngineId = source.Productions[i].EngineId,
                     EngineName = engineName,
-                    Number = source.Productions[i].Numder,
+                    Number = source.Productions[i].Number,
                     Amount = source.Productions[i].Amount,
                     TimeCreate = source.Productions[i].TimeCreate.ToLongDateString(),
                     TimeImplement = source.Productions[i].TimeImplement?.ToLongDateString(),
@@ -72,7 +72,7 @@ namespace AbstractMotorFactoryServiceImplementList.Implementations
                 CustomerId = model.CustomerId,
                 EngineId = model.EngineId,
                 TimeCreate = DateTime.Now,
-                Numder = model.Number,
+                Number = model.Number,
                 Amount = model.Amount,
                 State = ProductionStatus.Принят
             });

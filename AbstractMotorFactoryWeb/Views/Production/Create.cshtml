@@ -1,0 +1,57 @@
+﻿@model AbstractMotorFactoryServiceDAL.ViewModels.ProductionViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Добавление заказа</h2>
+
+
+@using (Html.BeginForm("CreatePost", "Production", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Изделие</label>
+            <div class="col-md-10">
+                @Html.DropDownList("EngineId", ViewBag.Engine as SelectList, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Клиент</label>
+
+            <div class="col-md-10">
+                @Html.DropDownList("CustomerId", ViewBag.Customer as SelectList, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Number, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control", @Value = "1", @min = "1" } })
+                @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Вернуться к списку заказов", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

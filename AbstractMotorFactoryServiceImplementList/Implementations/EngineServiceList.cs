@@ -128,7 +128,7 @@ namespace AbstractMotorFactoryServiceImplementList.Implementations
             }
             for (int i = 0; i < model.EngineDetails.Count; ++i)
             {
-                for (int j = 1; j < model.EngineDetails.Count; ++j)
+                for (int j = i + 1; j < model.EngineDetails.Count; ++j)
                 {
                     if (model.EngineDetails[i].DetailId ==
                     model.EngineDetails[j].DetailId)
