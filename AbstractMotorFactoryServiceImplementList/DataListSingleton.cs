@@ -17,6 +17,10 @@ namespace AbstractMotorFactoryServiceImplementList
 
         public List<EngineDetail> EngineDetails { get; set; }
 
+        public List<Storage> Storages { get; set; }
+
+        public List<StorageDetail> StorageDetails { get; set; }
+
         private DataListSingleton()
         {
             Customers = new List<Customer>();
@@ -28,6 +32,10 @@ namespace AbstractMotorFactoryServiceImplementList
             Engines = new List<Engine>();
 
             EngineDetails = new List<EngineDetail>();
+
+            Storages = new List<Storage>();
+
+            StorageDetails = new List<StorageDetail>();
         }
 
         public static DataListSingleton GetInstance()
@@ -37,6 +45,7 @@ namespace AbstractMotorFactoryServiceImplementList
                 instance = new DataListSingleton();
             }
             return instance;
-        }
+        }
+
     }
 }

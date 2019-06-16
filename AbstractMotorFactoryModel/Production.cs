@@ -8,6 +8,8 @@ namespace AbstractMotorFactoryModel
 
         public int CustomerId { get; set; }
 
+        public string CustomerFIO { get; set; }
+
         public int EngineId { get; set; }
 
         public int Number { get; set; }

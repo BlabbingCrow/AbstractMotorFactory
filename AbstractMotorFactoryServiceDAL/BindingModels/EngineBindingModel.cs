@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 
+
 namespace AbstractMotorFactoryServiceDAL.BindingModels
 {
     public class EngineBindingModel
